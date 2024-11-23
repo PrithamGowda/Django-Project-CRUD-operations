@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCB Player List</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    color: #333;
+    padding: 20px;
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    background-color: #800020; /* Red */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* Table Container */
+.table-container {
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #c8102e; /* Red */
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f2f2f2;
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #000; /* Black */
+    color: white;
+    border-radius: 10px;
+}
+button {
+    padding: 7px;
+    background-color: #c8102e; /* Red */
+    color: white;
+    border: none;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #c8102e; /* Dark Red */}
+
+    </style>
+</head>
+<body>
+    {% load static %}
+    <header>
+        <div class="logo">
+            <img src="{% static 'img/rcb_logo.jpg' %}" alt="RCB Logo">
+        </div>
+        <h1>RCB Player List</h1>
+    </header>
+
+    <main>
+        <section class="table-container">
+            <h2>Registered Players</h2>
+            <table id="player-table">
+                <thead>
+                    <tr>
+                        <th>no</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Role</th>
+                        <th>Nationality</th>
+                        <th>Base Price (INR)</th>
+                        <th>Update Deatils</th>
+                        <th>Remove Player</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for player in players %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{ player.pname }}</td>
+                        <td>{{ player.age }}</td>
+                        <td>{{player.role}}</td>
+                        <td>{{player.nationality}}</td>
+                        <td>{{player.baseprice}}</td>
+                        <td><a href="{% url 'update' player.id %}"><button>Update</button></a></td>
+                        <td><a href="{% url 'delete' player.id %}"><button onclick="return confirm('want to remove this player')">Delete</button></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'create' %}"><button>Add Player</button></a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Royal Challengers Bangalore | Play Bold</p>
+    </footer>
+</body>
+</html>
